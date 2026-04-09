@@ -21,9 +21,12 @@ app.use(cors({
 
 // Handle preflight
 app.options(/.*/, (req, res) => {
+  console.log('OPTIONS request received for:', req.path);
+  console.log('Origin:', req.get('origin'));
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  console.log('CORS headers set');
   res.sendStatus(200);
 });
 
@@ -34,6 +37,10 @@ app.get('/', (req, res) => {
 
 app.get('/cors-test', (req, res) => {
   res.json({ message: 'CORS test endpoint', headers: req.headers });
+});
+
+app.get('/test', (req, res) => {
+  res.json({ message: 'Backend is working', timestamp: new Date() });
 });
 
 // Importar rutas
