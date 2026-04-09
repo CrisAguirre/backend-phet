@@ -33,7 +33,7 @@ exports.obtenerEvaluaciones = async (req, res) => {
   try {
     const evaluations = await Evaluation.find()
       .sort({ createdAt: -1 })
-      .populate('userId', 'email role');
+      .populate('userId', 'name age email role');
 
     res.status(200).json({
       status: 'success',
