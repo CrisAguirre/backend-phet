@@ -30,7 +30,7 @@ exports.obtenerSesiones = async (req, res) => {
   try {
     const sessions = await Session.find()
       .sort({ loginTime: -1 })
-      .populate('userId', 'email role');
+      .populate('userId', 'name age email role');
 
     res.status(200).json({
       status: 'success',

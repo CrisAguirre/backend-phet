@@ -9,9 +9,11 @@ const signToken = (id) => {
 
 exports.register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, age, email, password } = req.body;
     
     const newUser = await User.create({
+      name,
+      age,
       email,
       password
     });
@@ -24,6 +26,8 @@ exports.register = async (req, res) => {
       data: {
         user: {
           id: newUser._id,
+          name: newUser.name,
+          age: newUser.age,
           email: newUser.email,
           role: newUser.role
         }
@@ -65,6 +69,8 @@ exports.login = async (req, res) => {
       data: {
         user: {
           id: user._id,
+          name: user.name,
+          age: user.age,
           email: user.email,
           role: user.role
         }

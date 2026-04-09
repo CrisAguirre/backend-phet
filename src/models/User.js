@@ -2,6 +2,15 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'El nombre es obligatorio'],
+    trim: true
+  },
+  age: {
+    type: Number,
+    required: [true, 'La edad es obligatoria']
+  },
   email: {
     type: String,
     required: [true, 'El correo es obligatorio'],
