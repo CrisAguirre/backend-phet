@@ -19,9 +19,8 @@ app.use(cors({
   credentials: true
 }));
 
-// Manejar preflight explícitamente (importante para Angular)
-// En Express 5, '*' fue removido. El nuevo estándar tipo regex es '/*' o '/(.*)'
-app.options('/*', cors()); 
+// Manejar preflight explícitamente para Angular (Express 5 compatible)
+app.options(/.*/, cors());
 
 app.use(express.json());
 app.get('/', (req, res) => {
