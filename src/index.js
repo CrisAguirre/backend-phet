@@ -12,15 +12,17 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(cors({
+const corsOptions = {
   origin: 'https://simulador-phet-mp.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
-}));
+};
 
-// Manejar preflight explícitamente para Angular (Express 5 compatible)
-app.options(/.*/, cors());
+app.use(cors(corsOptions));
+
+// Manejar preflight explícitamente con la misma configuración CORS
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.get('/', (req, res) => {
