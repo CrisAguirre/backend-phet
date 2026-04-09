@@ -12,10 +12,12 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: '*', // Permite que Vercel (y cualquier otro) acceda sin bloqueos
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
-
-// Rutas básicas (placeholder)
 app.get('/', (req, res) => {
   res.send('API Backend del Simulador Phet funcionando.');
 });
