@@ -4,7 +4,7 @@ const Evaluation = require('../models/Evaluation');
 exports.guardarEvaluacion = async (req, res) => {
   try {
     const { userId, email, taller, score, totalQuestions, results } = req.body;
-    
+
     const newEvaluation = await Evaluation.create({
       userId,
       email,
@@ -33,13 +33,13 @@ exports.obtenerEvaluaciones = async (req, res) => {
   try {
     const evaluations = await Evaluation.find()
       .sort({ createdAt: -1 })
-      .populate('userId', 'name age email role');
+      .populate('userId', 'email role');
 
     res.status(200).json({
       status: 'success',
       results: evaluations.length,
       data: {
-        evaluations
+        evaluaciones: evaluations
       }
     });
   } catch (error) {
