@@ -8,7 +8,15 @@ connectDB();
 
 const app = express();
 
-// CORS: origen específico + credentials para que el JWT funcione
+// Prevent Railway edge from caching CORS responses
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.header('Pragma', 'no-cache');
+  res.header('Expires', '0');
+  next();
+});
+
+// CORS configuration - allow all origins for now to test
 app.use(cors({
   origin: 'https://simulador-phet-mp.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
