@@ -13,10 +13,15 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: '*', // Permite que Vercel (y cualquier otro) acceda sin bloqueos
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: 'https://simulador-phet-mp.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
+
+// Manejar preflight explícitamente (importante para Angular)
+app.options('*', cors()); 
+
 app.use(express.json());
 app.get('/', (req, res) => {
   res.send('API Backend del Simulador Phet funcionando.');
