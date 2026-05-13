@@ -41,6 +41,47 @@ exports.register = async (req, res) => {
   }
 };
 
+exports.guestLogin = async (req, res) => {
+  try {
+    const guestEmail = 'invitado@simulador-phet.app';
+
+    // Buscar o crear el usuario invitado
+    let guest = await User.findOne({ email: guestEmail });
+
+    if (!guest) {
+      guest = await User.create({
+        name: 'Invitado',
+        age: 0,
+        email: guestEmail,
+        password: Math.random().toString(36) + Math.random().toString(36),
+        role: 'student'
+      });
+    }
+
+    const token = signToken(guest._id);
+
+    res.status(200).json({
+      status: 'success',
+      token,
+      data: {
+        user: {
+          id: guest._id,
+          name: guest.name,
+          age: guest.age,
+          email: guest.email,
+          role: guest.role,
+          isGuest: true
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+};
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
